@@ -33,5 +33,8 @@
                 @endforeach
             </tbody>
         </table>
+        <form action="{{ route('categorias.create') }}" class="flex justify-center mt-4 mb-4">
+            <x-primary-button class="bg-green-500">Insertar una nueva categoría</x-primary-button>
+        </form>
     </div>
 </x-guest-layout>
