@@ -30,7 +30,10 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        return 'Store';
+        $categoria = new Categoria();
+        $categoria->nombre = $request->input('nombre');
+        $categoria->save();
+        return redirect()->route('categorias.index');
     }
 
     /**
