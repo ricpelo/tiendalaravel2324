@@ -21,7 +21,13 @@
                             <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Borrar</a>
+                            <form action="{{ route('categorias.destroy', ['categoria' => $categoria]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <x-primary-button class="bg-red-500">
+                                    Borrar
+                                </x-primary-button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
