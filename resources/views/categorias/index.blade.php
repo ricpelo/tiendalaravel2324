@@ -18,7 +18,11 @@
                             {{ $categoria->nombre }}
                         </th>
                         <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                            <a href="{{ route('categorias.edit', ['categoria' => $categoria]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                <x-primary-button>
+                                    Editar
+                                </x-primary-button>
+                            </a>
                         </td>
                         <td class="px-6 py-4">
                             <form action="{{ route('categorias.destroy', ['categoria' => $categoria]) }}" method="POST">
