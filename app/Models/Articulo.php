@@ -10,6 +10,13 @@ class Articulo extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['denominacion', 'precio', 'categoria_id'];
+
     public function categoria(): BelongsTo
     {
         return $this->belongsTo(Categoria::class);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Articulo;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class ArticuloController extends Controller
@@ -22,7 +23,9 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        return view('articulos.create');
+        return view('articulos.create', [
+            'categorias' => Categoria::all(),
+        ]);
     }
 
     /**
@@ -30,11 +33,8 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        $articulo = new Articulo();
-        $articulo->denominacion = $request->input('denominacion');
-        $articulo->precio = $request->input('precio');
-        $articulo->categoria_id = $request->input('categoria_id');
-        $articulo->save();
+        $validated = $this->validar($request);
+        Articulo::create($validated);
         return redirect()->route('articulos.index');
     }
 
@@ -51,7 +51,10 @@ class ArticuloController extends Controller
      */
     public function edit(Articulo $articulo)
     {
-        //
+        return view('articulos.edit', [
+            'articulo' => $articulo,
+            'categorias' => Categoria::all(),
+        ]);
     }
 
     /**
@@ -59,7 +62,9 @@ class ArticuloController extends Controller
      */
     public function update(Request $request, Articulo $articulo)
     {
-        //
+        $validated = $this->validar($request);
+        $articulo->update($validated);
+        return redirect()->route('articulos.index');
     }
 
     /**
@@ -69,5 +74,14 @@ class ArticuloController extends Controller
     {
         $articulo->delete();
         return redirect()->route('articulos.index');
+    }
+
+    private function validar(Request $request)
+    {
+        return $request->validate([
+            'denominacion' => 'required|max:255',
+            'precio' => 'required|numeric|decimal:2|between:-9999.99,9999.99',
+            'categoria_id' => 'required|integer|exists:categorias,id',
+        ]);
     }
 }
