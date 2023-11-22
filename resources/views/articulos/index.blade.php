@@ -1,5 +1,5 @@
-<x-guest-layout>
-    <div class="relative overflow-x-auto mx-auto shadow-md sm:rounded-lg">
+<x-app-layout>
+    <div class="relative overflow-x-auto w-3/4 mx-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -55,4 +55,4 @@
             <x-primary-button class="bg-green-500">Insertar un nuevo artículo</x-primary-button>
         </form>
     </div>
-</x-guest-layout>
+</x-app-layout>
