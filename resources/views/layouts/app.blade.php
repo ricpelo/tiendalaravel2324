@@ -29,6 +29,9 @@
 
             <!-- Page Content -->
             <main class="mt-4">
+                @if (session()->has('error'))
+                    {{ session()->get('error') }}
+                @endif
                 {{ $slot }}
             </main>
         </div>
