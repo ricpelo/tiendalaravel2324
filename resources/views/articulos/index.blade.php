@@ -24,7 +24,7 @@
                             {{ $articulo->denominacion }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $articulo->precio }}
+                            {{ dinero($articulo->precio) }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <a href="{{ route('categorias.edit', ['categoria' => $articulo->categoria]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
