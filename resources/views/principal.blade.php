@@ -14,6 +14,12 @@
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         {{ $articulo->denominacion }}
                     </p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                        Precio: {{ dinero($articulo->precio_ii) }}
+                    </p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                        {{ $articulo->categoria->nombre }}
+                    </p>
                 </div>
             @endforeach
         </div>

@@ -66,5 +66,6 @@
         <form action="{{ route('articulos.create') }}" class="flex justify-center mt-4 mb-4">
             <x-primary-button class="bg-green-500">Insertar un nuevo artículo</x-primary-button>
         </form>
+        {{ $articulos->links() }}
     </div>
 </x-app-layout>

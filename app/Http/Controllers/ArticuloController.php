@@ -14,7 +14,7 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        $articulos = Articulo::with(['iva', 'categoria'])->get();
+        $articulos = Articulo::with(['iva', 'categoria'])->paginate(2);
         return view('articulos.index', [
             'articulos' => $articulos,
         ]);
