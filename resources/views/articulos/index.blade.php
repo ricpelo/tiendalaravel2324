@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="relative overflow-x-auto w-auto mx-8 mx-auto shadow-md sm:rounded-lg">
+    <div class="relative overflow-x-auto w-auto mx-8 mshadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -8,6 +8,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Precio
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Precio (I. I.)
                     </th>
                     <th scope="col" class="px-6 py-3">
                         IVA
@@ -30,7 +33,10 @@
                             {{ dinero($articulo->precio) }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ "{$articulo->iva->tipo} ({$articulo->iva->por} %)" }}
+                            {{ dinero($articulo->precio_ii) }}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" title="{{ $articulo->iva->tipo }}">
+                            {{ $articulo->iva->por . " %" }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <a href="{{ route('categorias.edit', ['categoria' => $articulo->categoria]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
