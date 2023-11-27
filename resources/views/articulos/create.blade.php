@@ -21,6 +21,23 @@
                 <x-input-error :messages="$errors->get('precio')" class="mt-2" />
             </div>
 
+            <!-- IVA -->
+            <div class="mt-4">
+                <x-input-label for="iva_id" :value="'IVA del artículo'" />
+                <select id="iva_id"
+                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
+                    name="iva_id" required>
+                    @foreach ($ivas as $iva)
+                        <option value="{{ $iva->id }}"
+                            {{ old('iva_id') == $iva->id ? 'selected' : '' }}
+                            >
+                            {{ $iva->tipo }}
+                        </option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('iva_id')" class="mt-2" />
+            </div>
+
             <!-- Categoría -->
             <div class="mt-4">
                 <x-input-label for="categoria_id" :value="'Categoría del artículo'" />
@@ -28,7 +45,9 @@
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
                     name="categoria_id" required>
                     @foreach ($categorias as $categoria)
-                        <option value="{{ $categoria->id }}">
+                        <option value="{{ $categoria->id }}"
+                            {{ old('categoria_id') == $categoria->id ? 'selected' : '' }}
+                            >
                             {{ $categoria->nombre }}
                         </option>
                     @endforeach

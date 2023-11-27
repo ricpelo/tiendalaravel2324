@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Articulo;
 use App\Models\Categoria;
+use App\Models\Iva;
 use Illuminate\Http\Request;
 
 class ArticuloController extends Controller
@@ -25,6 +26,7 @@ class ArticuloController extends Controller
     {
         return view('articulos.create', [
             'categorias' => Categoria::all(),
+            'ivas' => Iva::all(),
         ]);
     }
 
@@ -54,6 +56,7 @@ class ArticuloController extends Controller
         return view('articulos.edit', [
             'articulo' => $articulo,
             'categorias' => Categoria::all(),
+            'ivas' => Iva::all(),
         ]);
     }
 
@@ -82,6 +85,7 @@ class ArticuloController extends Controller
             'denominacion' => 'required|max:255',
             'precio' => 'required|numeric|decimal:2|between:-9999.99,9999.99',
             'categoria_id' => 'required|integer|exists:categorias,id',
+            'iva_id' => 'required|integer|exists:ivas,id'
         ]);
     }
 }
