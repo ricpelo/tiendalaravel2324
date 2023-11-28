@@ -38,7 +38,8 @@ Route::get('/ricardo', function () {
     return view('ricardo');
 });
 
-Route::resource('categorias', CategoriaController::class);
+Route::resource('categorias', CategoriaController::class)
+    ->middleware('auth');
 
 Route::resource('articulos', ArticuloController::class);
 
