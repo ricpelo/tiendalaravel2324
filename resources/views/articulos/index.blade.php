@@ -4,10 +4,14 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        Denominación
+                        <a href="{{ route('articulos.index', ['order' => 'denominacion', 'order_dir' => order_dir($order == 'denominacion', $order_dir)]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Denominación {{ order_dir_arrow($order == 'denominacion', $order_dir) }}
+                        </a>
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Precio
+                        <a href="{{ route('articulos.index', ['order' => 'precio', 'order_dir' => order_dir($order == 'precio', $order_dir)]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Precio {{ order_dir_arrow($order == 'precio', $order_dir) }}
+                        </a>
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Precio (I. I.)
@@ -66,6 +70,6 @@
         <form action="{{ route('articulos.create') }}" class="flex justify-center mt-4 mb-4">
             <x-primary-button class="bg-green-500">Insertar un nuevo artículo</x-primary-button>
         </form>
-        {{ $articulos->links() }}
+        {{ $articulos->withQueryString()->links() }}
     </div>
 </x-app-layout>

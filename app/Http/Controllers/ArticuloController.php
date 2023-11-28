@@ -12,11 +12,17 @@ class ArticuloController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articulos = Articulo::with(['iva', 'categoria'])->paginate(2);
+        $order = $request->query('order', 'denominacion');
+        $order_dir = $request->query('order_dir', 'asc');
+        $articulos = Articulo::with(['iva', 'categoria'])
+            ->orderBy($order, $order_dir)
+            ->paginate(3);
         return view('articulos.index', [
             'articulos' => $articulos,
+            'order' => $order,
+            'order_dir' => $order_dir,
         ]);
     }
 
