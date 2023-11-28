@@ -17,7 +17,10 @@ class ArticuloController extends Controller
         $order = $request->query('order', 'denominacion');
         $order_dir = $request->query('order_dir', 'asc');
         $articulos = Articulo::with(['iva', 'categoria'])
+            ->leftJoin('categorias', 'articulos.categoria_id', '=', 'categorias.id')
+            ->leftJoin('ivas', 'articulos.iva_id', '=', 'ivas.id')
             ->orderBy($order, $order_dir)
+            ->orderBy('denominacion')
             ->paginate(3);
         return view('articulos.index', [
             'articulos' => $articulos,

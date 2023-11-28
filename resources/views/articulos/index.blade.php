@@ -17,10 +17,14 @@
                         Precio (I. I.)
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        IVA
+                        <a href="{{ route('articulos.index', ['order' => 'por', 'order_dir' => order_dir($order == 'por', $order_dir)]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            IVA {{ order_dir_arrow($order == 'por', $order_dir) }}
+                        </a>
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Categoría
+                        <a href="{{ route('articulos.index', ['order' => 'nombre', 'order_dir' => order_dir($order == 'nombre', $order_dir)]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Categoría {{ order_dir_arrow($order == 'nombre', $order_dir) }}
+                        </a>
                     </th>
                     <th scope="col" class="px-6 py-3" colspan="2">
                         Acción
