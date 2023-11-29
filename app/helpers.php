@@ -23,3 +23,12 @@ function order_dir($order, $order_dir)
 {
     return $order == false ? 'asc' : ($order_dir == 'asc' ? 'desc' : 'asc');
 }
+
+function carrito()
+{
+    if (session()->missing('carrito')) {
+        session()->put('carrito', new \App\Generico\Carrito());
+    }
+
+    return session('carrito');
+}
