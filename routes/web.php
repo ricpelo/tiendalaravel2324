@@ -51,6 +51,11 @@ Route::get('/carrito/insertar/{id}', function ($id) {
     $carrito->insertar($id);
     session()->put('carrito', $carrito);
     return redirect()->route('principal');
-})->name('carrito.insertar');
+})->name('carrito.insertar')->whereNumber('id');
+
+Route::get('/carrito/vaciar', function () {
+    session()->forget('carrito');
+    return redirect()->route('principal');
+})->name('carrito.vaciar');
 
 require __DIR__.'/auth.php';
