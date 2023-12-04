@@ -31,4 +31,9 @@ class Articulo extends Model
     {
         return $this->precio * (1 + $this->iva->por / 100);
     }
+
+    public function facturas()
+    {
+        return $this->belongsToMany(Factura::class)->withPivot('cantidad');
+    }
 }
