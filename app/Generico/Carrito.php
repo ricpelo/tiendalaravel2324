@@ -51,4 +51,13 @@ class Carrito
     {
         return $this->lineas;
     }
+
+    public static function carrito()
+    {
+        if (session()->missing('carrito')) {
+            session()->put('carrito', new static());
+        }
+
+        return session('carrito');
+    }
 }

@@ -49,7 +49,7 @@ Route::resource('articulos', ArticuloController::class);
 
 Route::get('/carrito/insertar/{id}', function ($id) {
     $articulo = Articulo::findOrFail($id);
-    $carrito = carrito();
+    $carrito = Carrito::carrito();
     $carrito->insertar($id);
     session()->put('carrito', $carrito);
     return redirect()->route('principal');
