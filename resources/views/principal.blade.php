@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="flex">
         <div
-            class="p-2 flex-1 grid grid-cols-3 gap-4 justify-center justify-items-center">
+            class="p-2 grid grid-cols-3 gap-4 justify-center justify-items-center">
             @foreach ($articulos as $articulo)
                 <div
                     class="p-6 max-w-xs min-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -54,6 +54,9 @@
                                     </td>
                                     <td class="py-4 px-6 text-center">
                                         {{ $cantidad }}
+                                        <a href="{{ route('carrito.eliminar', $articulo) }}" class="inline-flex items-center py-1 px-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            -
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

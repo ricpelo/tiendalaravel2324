@@ -2,6 +2,7 @@
 
 use App\Generico\Carrito;
 use App\Http\Controllers\ArticuloController;
+use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Articulo;
@@ -38,27 +39,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/ricardo', function () {
-    return view('ricardo');
-});
+Route::view('/ricardo', 'ricardo');
 
 Route::resource('categorias', CategoriaController::class)
     ->middleware('auth');
 
 Route::resource('articulos', ArticuloController::class);
 
-Route::get('/carrito/insertar/{id}', function ($id) {
-    $articulo = Articulo::findOrFail($id);
-    $carrito = Carrito::carrito();
-    $carrito->insertar($id);
-    session()->put('carrito', $carrito);
-    return redirect()->route('principal');
-})->name('carrito.insertar')->whereNumber('id');
+Route::get('/carrito/insertar/{id}', [CarritoController::class, 'insertar'])
+    ->name('carrito.insertar')->whereNumber('id');
 
-Route::get('/carrito/vaciar', function () {
-    session()->forget('carrito');
-    return redirect()->route('principal');
-})->name('carrito.vaciar');
+Route::get('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])
+    ->name('carrito.eliminar')->whereNumber('id');
+
+Route::get('/carrito/vaciar', [CarritoController::class, 'vaciar'])
+    ->name('carrito.vaciar');
 
 Route::get('/comprar', function () {
     return view('comprar', [
@@ -107,9 +102,14 @@ Route::post('/realizar_compra', function () {
 })->middleware('auth')->name('realizar_compra');
 
 Route::get('facturas', function () {
-    // $u->facturas()->selectRaw('facturas.id, sum(cantidad * precio) as total')->join('articulo_factura', 'facturas.id', '=', 'articulo_factura.factura_id')->join('articulos', 'articulos.id', '=', 'articulo_factura.articulo_id')->groupBy('facturas.id')->get()
+    $facturas = Auth::user()->facturas()
+        ->selectRaw('facturas.id, facturas.user_id, facturas.created_at, sum(cantidad * precio) as total')
+        ->join('articulo_factura', 'facturas.id', '=', 'articulo_factura.factura_id')
+        ->join('articulos', 'articulos.id', '=', 'articulo_factura.articulo_id')
+        ->groupBy('facturas.id')
+        ->get();
     return view('facturas', [
-        'facturas' => Auth::user()->facturas,
+        'facturas' => $facturas,
     ]);
 })->middleware('auth')->name('facturas.index');
 
