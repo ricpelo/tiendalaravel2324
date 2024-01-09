@@ -4,6 +4,7 @@ use App\Generico\Carrito;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Articulo;
 use App\Models\Factura;
@@ -112,5 +113,7 @@ Route::get('facturas', function () {
         'facturas' => $facturas,
     ]);
 })->middleware('auth')->name('facturas.index');
+
+Route::resource('facturas', FacturaController::class);
 
 require __DIR__.'/auth.php';

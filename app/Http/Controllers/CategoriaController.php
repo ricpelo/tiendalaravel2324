@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoriaRequest;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoriaController extends Controller
 {
+    /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Categoria::class, 'categoria');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,14 +38,13 @@ class CategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|max:255',
-        ]);
+        // $this->authorize('update');
 
+        $validated = $request->validated();
         $categoria = new Categoria();
-        $categoria->nombre = $request->input('nombre');
+        $categoria->nombre = $validated['nombre'];
         $categoria->save();
         session()->flash('success', 'La categoría se ha creado correctamente.');
         return redirect()->route('categorias.index');
@@ -62,13 +71,12 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(CategoriaRequest $request, Categoria $categoria)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|max:255',
-        ]);
+        // $this->authorize('update', $categoria);
 
-        $categoria->nombre = $request->input('nombre');
+        $validated = $request->validated();
+        $categoria->nombre = $validated['nombre'];
         $categoria->save();
         return redirect()->route('categorias.index');
     }
