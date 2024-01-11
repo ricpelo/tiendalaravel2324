@@ -29,7 +29,7 @@ class CategoriaPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->es_admin();
     }
 
     /**
@@ -37,7 +37,7 @@ class CategoriaPolicy
      */
     public function update(User $user, Categoria $categoria): bool
     {
-        return $user->name == 'admin';
+        return $user->es_admin();
     }
 
     /**
@@ -45,7 +45,7 @@ class CategoriaPolicy
      */
     public function delete(User $user, Categoria $categoria): bool
     {
-        return true;
+        return $user->es_admin();
     }
 
     /**

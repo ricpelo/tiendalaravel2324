@@ -102,18 +102,6 @@ Route::post('/realizar_compra', function () {
     return redirect()->route('principal');
 })->middleware('auth')->name('realizar_compra');
 
-Route::get('facturas', function () {
-    $facturas = Auth::user()->facturas()
-        ->selectRaw('facturas.id, facturas.user_id, facturas.created_at, sum(cantidad * precio) as total')
-        ->join('articulo_factura', 'facturas.id', '=', 'articulo_factura.factura_id')
-        ->join('articulos', 'articulos.id', '=', 'articulo_factura.articulo_id')
-        ->groupBy('facturas.id')
-        ->get();
-    return view('facturas', [
-        'facturas' => $facturas,
-    ]);
-})->middleware('auth')->name('facturas.index');
-
 Route::resource('facturas', FacturaController::class);
 
 require __DIR__.'/auth.php';

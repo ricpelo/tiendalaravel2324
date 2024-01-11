@@ -13,7 +13,7 @@ class FacturaPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,8 @@ class FacturaPolicy
      */
     public function view(User $user, Factura $factura): bool
     {
-        return $user->id == $factura->user_id;
+        return $user->es_admin()
+            || $user->id == $factura->user_id;
     }
 
     /**
@@ -29,7 +30,7 @@ class FacturaPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +38,7 @@ class FacturaPolicy
      */
     public function update(User $user, Factura $factura): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +46,7 @@ class FacturaPolicy
      */
     public function delete(User $user, Factura $factura): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +54,7 @@ class FacturaPolicy
      */
     public function restore(User $user, Factura $factura): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +62,6 @@ class FacturaPolicy
      */
     public function forceDelete(User $user, Factura $factura): bool
     {
-        //
+        return true;
     }
 }

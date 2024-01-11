@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Factura::class);
     }
+
+    public function es_admin(): bool
+    {
+        return $this->is_admin;
+    }
 }

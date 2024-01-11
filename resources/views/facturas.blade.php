@@ -6,6 +6,9 @@
                     <th scope="col" class="px-6 py-3">
                         Fecha
                     </th>
+                    <th scope="col" class="px-6 py-3">
+                        Cliente
+                    </th>
                     <th scope="col" class="text-right px-6 py-3">
                         Total
                     </th>
@@ -18,9 +21,12 @@
                 @foreach ($facturas as $factura)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                            {{ fecha($factura->created_at) }}
+                            <a href="{{ route('facturas.show', ['factura' => $factura]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                {{ fecha($factura->created_at) }}
                             </a>
+                        </th>
+                        <th scope="row" class="text-right px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $factura->user->name }}
                         </th>
                         <th scope="row" class="text-right px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ dinero($factura->total) }}
