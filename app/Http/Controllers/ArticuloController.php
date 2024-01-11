@@ -99,4 +99,23 @@ class ArticuloController extends Controller
             'iva_id' => 'required|integer|exists:ivas,id'
         ]);
     }
+
+    public function cambiar_imagen(Articulo $articulo)
+    {
+        return view('articulos.cambiar_imagen', [
+            'articulo' => $articulo,
+        ]);
+    }
+
+    public function guardar_imagen(Articulo $articulo, Request $request)
+    {
+        $request->validate([
+            'imagen' => 'required|mimes:png',
+        ]);
+
+        $imagen = $request->file('imagen');
+        $nombre = $articulo->id . '.png';
+        $imagen->storeAs('uploads', $nombre, 'public');
+        return redirect()->route('articulos.index');
+    }
 }

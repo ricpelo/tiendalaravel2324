@@ -47,6 +47,12 @@ Route::resource('categorias', CategoriaController::class)
 
 Route::resource('articulos', ArticuloController::class);
 
+Route::get('/cambiar_imagen/{articulo}', [ArticuloController::class, 'cambiar_imagen'])
+    ->name('articulos.cambiar_imagen')->whereNumber('articulo');
+
+Route::post('/cambiar_imagen/{articulo}', [ArticuloController::class, 'guardar_imagen'])
+->name('articulos.guardar_imagen')->whereNumber('articulo');
+
 Route::get('/carrito/insertar/{id}', [CarritoController::class, 'insertar'])
     ->name('carrito.insertar')->whereNumber('id');
 
