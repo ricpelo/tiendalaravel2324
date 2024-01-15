@@ -5,10 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Articulo extends Model
 {
     use HasFactory;
+
+    private function imagen_url_relativa()
+    {
+        return '/uploads/' . $this->imagen;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -35,5 +41,20 @@ class Articulo extends Model
     public function facturas()
     {
         return $this->belongsToMany(Factura::class)->withPivot('cantidad');
+    }
+
+    public function getImagenAttribute()
+    {
+        return $this->id . '.png';
+    }
+
+    public function getImagenUrlAttribute()
+    {
+        return Storage::url(mb_substr($this->imagen_url_relativa(), 1));
+    }
+
+    public function existeImagen()
+    {
+        return Storage::disk('public')->exists($this->imagen_url_relativa());
     }
 }
