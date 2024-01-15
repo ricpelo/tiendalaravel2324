@@ -110,7 +110,7 @@ class ArticuloController extends Controller
     public function guardar_imagen(Articulo $articulo, Request $request)
     {
         $request->validate([
-            'imagen' => 'required|mimes:png',
+            'imagen' => 'required|mimes:png|max:200',
         ]);
 
         $imagen = $request->file('imagen');
