@@ -114,7 +114,7 @@ class ArticuloController extends Controller
         ]);
 
         $imagen = $request->file('imagen');
-        $nombre = $articulo->id . '.png';
+        $nombre = $articulo->imagen;
         $imagen->storeAs('uploads', $nombre, 'public');
         return redirect()->route('articulos.index');
     }
