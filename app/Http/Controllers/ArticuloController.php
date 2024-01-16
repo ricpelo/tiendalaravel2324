@@ -118,12 +118,20 @@ class ArticuloController extends Controller
 
         $imagen = $request->file('imagen');
         $nombre = $articulo->imagen;
-        $imagen->storeAs('uploads', $nombre, 'public');
+        // $imagen->storeAs('uploads', $nombre, 'public');
 
+        $imagen_original = $imagen;
         $manager = new ImageManager(new Driver());
-        $imagen = $manager->read(Storage::disk('public')->get('uploads/' . $nombre));
+        $imagen = $manager->read($imagen);
         $imagen->scaleDown(400);
         $ruta = Storage::path('public/uploads/' . $nombre);
+        $imagen->save($ruta);
+
+        $imagen = $imagen_original;
+        $imagen = $manager->read($imagen);
+        $imagen->scaleDown(200);
+        $ruta = Storage::path('public/uploads/' . $nombre);
+        $ruta = preg_replace('/\.png$/', '_mini.png', $ruta);
         $imagen->save($ruta);
 
         return redirect()->route('articulos.index');
