@@ -6,6 +6,9 @@ use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Iva;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class ArticuloController extends Controller
 {
@@ -116,6 +119,13 @@ class ArticuloController extends Controller
         $imagen = $request->file('imagen');
         $nombre = $articulo->imagen;
         $imagen->storeAs('uploads', $nombre, 'public');
+
+        $manager = new ImageManager(new Driver());
+        $imagen = $manager->read(Storage::disk('public')->get('uploads/' . $nombre));
+        $imagen->scaleDown(400);
+        $ruta = Storage::path('public/uploads/' . $nombre);
+        $imagen->save($ruta);
+
         return redirect()->route('articulos.index');
     }
 }
