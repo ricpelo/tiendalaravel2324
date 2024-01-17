@@ -1,11 +1,14 @@
 <x-app-layout>
     <div class="flex">
-        <div
-            class="p-2 grid grid-cols-3 gap-4 justify-center justify-items-center">
+        <div class="p-2 grid grid-cols-3 gap-4 justify-center justify-items-center">
             @foreach ($articulos as $articulo)
-                <div
-                    class="p-6 max-w-xs min-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
+                <div class="p-6 max-w-xs min-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                    @if ($articulo->existeMiniatura())
+                    <a href="{{ route('articulos.show', ['articulo' => $articulo]) }}">
+                        <img src="{{ asset($articulo->miniatura_url) }}" />
+                    </a>
+                    @endif
+                    <a href="{{ route('articulos.show', ['articulo' => $articulo]) }}">
                         <h5
                             class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                             {{ $articulo->denominacion }}

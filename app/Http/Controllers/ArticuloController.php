@@ -6,6 +6,7 @@ use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Iva;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
@@ -59,7 +60,9 @@ class ArticuloController extends Controller
      */
     public function show(Articulo $articulo)
     {
-        //
+        return view('articulos.show', [
+            'articulo' => $articulo,
+        ]);
     }
 
     /**
@@ -112,8 +115,10 @@ class ArticuloController extends Controller
 
     public function guardar_imagen(Articulo $articulo, Request $request)
     {
+        $mime = Articulo::MIME_IMAGEN;
+
         $request->validate([
-            'imagen' => 'required|mimes:png|max:200',
+            'imagen' => "required|mimes:$mime|max:500",
         ]);
 
         $imagen = $request->file('imagen');
@@ -131,7 +136,7 @@ class ArticuloController extends Controller
         $imagen = $manager->read($imagen);
         $imagen->scaleDown(200);
         $ruta = Storage::path('public/uploads/' . $nombre);
-        $ruta = preg_replace('/\.png$/', '_mini.png', $ruta);
+        $ruta = preg_replace("/\.{$mime}$/", "_mini.{$mime}", $ruta);
         $imagen->save($ruta);
 
         return redirect()->route('articulos.index');
