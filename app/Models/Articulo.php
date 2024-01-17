@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Intervention\Image\Interfaces\ImageInterface;
 
 class Articulo extends Model
 {
@@ -78,5 +82,17 @@ class Articulo extends Model
     public function existeMiniatura()
     {
         return Storage::disk('public')->exists($this->miniatura_url_relativa());
+    }
+
+    public function guardarImagen(UploadedFile $imagen, string $nombre, int $escala, ?ImageManager $manager = null)
+    {
+        if ($manager === null) {
+            $manager = new ImageManager(new Driver());
+        }
+
+        $imagen = $manager->read($imagen);
+        $imagen->scaleDown($escala);
+        $ruta = Storage::path('public/uploads/' . $nombre);
+        $imagen->save($ruta);
     }
 }
