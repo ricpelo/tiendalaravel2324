@@ -122,7 +122,9 @@ class ArticuloController extends Controller
         ]);
 
         $imagen = $request->file('imagen');
+        Storage::makeDirectory('public/uploads');
         // $imagen->storeAs('uploads', $nombre, 'public');
+
         $imagen_original = $imagen;
         $manager = new ImageManager(new Driver());
         $articulo->guardarImagen($imagen, $articulo->imagen, 400, $manager);
