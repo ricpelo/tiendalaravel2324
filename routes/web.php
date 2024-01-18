@@ -6,10 +6,13 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\PedidoGenerado;
 use App\Models\Articulo;
 use App\Models\Factura;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,7 +71,7 @@ Route::get('/comprar', function () {
     ]);
 })->middleware('auth')->name('comprar');
 
-Route::post('/realizar_compra', function () {
+Route::post('/realizar_compra', function (Request $request) {
     $carrito = carrito();
     DB::beginTransaction();
     $factura = new Factura();
@@ -103,6 +106,7 @@ Route::post('/realizar_compra', function () {
         // DB::table('articulo_factura')->insert($inserts);
 
     DB::commit();
+    Mail::to($request->user())->send(new PedidoGenerado($factura));
     session()->flash('success', 'La factura se ha generado correctamente.');
     session()->forget('carrito');
     return redirect()->route('principal');
